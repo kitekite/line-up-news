@@ -1,7 +1,7 @@
 # line-up-news
-Download zip files from web using Ruby and store xml data in Redis.
+Download zip files from web using [Ruby](https://www.ruby-lang.org/en/) and store xml data in [Redis](http://redis.io).
 
-###Steps for Getting Started
+#####Steps for Getting Started
 1. Install the gems from the command line.
 
 	* gem install nokogiri
