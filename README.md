@@ -11,13 +11,5 @@ Download zip files from web using Ruby and store xml data in Redis.
 
 2. Do **$ruby zipfiles.rb**
 
-	'/tmp' folder is created for downloaded zip files from url and extracted files. Then stores xml data as json in Redis.
+	'/tmp' folder is created for downloaded zip files from url and extracted files. Then stores xml data as json in [Redis](http://redis.io).
 
-
-```javascript
-function fancyAlert(arg) {
-  if(arg) {
-    $.facebox({div:'#Redis'})
-  }
-}
-```
