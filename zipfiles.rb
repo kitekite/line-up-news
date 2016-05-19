@@ -8,10 +8,10 @@ require File.join(File.dirname(__FILE__), 'newslist')
 
 
 url = 'http://feed.omgili.com/5Rh5AMTrc4Pv/mainstream/posts/'
-
+thread_count = 25
 News = NewsList.new
 
-def findzips(url)
+def findzips(url,thread_count)
 	ziplink = []
 	n=0
 
@@ -22,23 +22,32 @@ def findzips(url)
         	ziplink[n+=1] = link 
     	end
     end
-
-	zipdownload(ziplink)
+    if ziplink.length != 0
+		zipdownload(ziplink,thread_count)
+	end
+	
 end
 
-def zipdownload(ziplinks)
+def zipdownload(ziplinks,thread_count)
+	Thread.abort_on_exception = true
+	
 	tmpdir = File.join(Dir.pwd,'tmp')
 	Dir.mkdir tmpdir unless File.exists? tmpdir
+	queue = Queue.new
+	ziplinks.reject(&:nil?).map {|zlink| queue << zlink}
 
-	if ziplinks.length != 0
-		puts ziplinks.size
-		#ziplinks.reject(&:nil?).map { |link|  File.open(File.basename(link),'wb'){|f| f << open(link).read}}
-		ziplinks.reject(&:nil?).map { |link|  
-			filename = File.basename(link)
-			IO.copy_stream(open(link), File.join(tmpdir,filename))
-			puts link+"  "+File.basename(link,File.extname(link))
-		}
+	threads = thread_count.times.map do
+		Thread.new do
+			#p "inside thread "
+			while !queue.empty? && zlink = queue.pop
+				filename = File.basename(zlink)
+				IO.copy_stream(open(zlink), File.join(tmpdir,filename))
+				#puts zlink+"  "+File.basename(zlink,File.extname(zlink))
+			end
+		end
 	end
+
+	threads.each(&:join)
 end
 
 def ziplist()
