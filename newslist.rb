@@ -16,7 +16,7 @@ class NewsList
 		#list - NEWS_XML 
 		#p "inside push "
 		@db.rpush(REDIS_KEY, data)
-		p "length of list stored at key :::"+(@db.llen(REDIS_KEY)).to_s
+		#p "length of list stored at key :::"+(@db.llen(REDIS_KEY)).to_s
 		@trim_count += 1
 		if(@trim_count > TRIM_THRESHOLD)
 			#p @trim_count.to_s+" trim_count ****************  Before---"
