@@ -93,20 +93,20 @@ end
 begin
 	
 	Thread.abort_on_exception = true
-
+	p "Process running ..."
 	bigthreads = []
 	bigthreads << Thread.new{
 		findzips(url,thread_count)
 	}
 	sleep 120
 	bigthreads << Thread.new{
-		10.times {
+		100.times {
 			ziplist()
 		}
 	}
 	sleep 90
 	bigthreads << Thread.new{
-		30.times {
+		500.times {
 			readxml()
 		}
 	}
